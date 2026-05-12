@@ -9,17 +9,17 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) : ApiResponse<ResponseCommentDto> {
+  create(@Body() createCommentDto: CreateCommentDto) : ResponseCommentDto {
     return this.commentsService.create(createCommentDto);
   }
 
   @Get()
-  findByPostId(@Query('postId') postId: string) : Promise<ApiResponse<ResponseCommentDto[]>> {
+  findByPostId(@Query('postId') postId: string) : Promise<ResponseCommentDto[]> {
     return this.commentsService.findByPostId(postId);
   }
   
   @Delete(':id')
-  remove(@Param('id') id: string) : Promise<ApiResponse<void>> {
+  remove(@Param('id') id: string) : Promise<undefined> {
     return this.commentsService.remove(id);
   }
 }

@@ -4,7 +4,6 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './schemas/post.schema';
 import { Model } from 'mongoose';
-import { ApiResponse } from '../common/responses/api.response';
 import { ResponsePostDto } from './dto/response-post.dto';
 import { plainToInstance } from 'class-transformer';
 import { PaginationDto } from '../common/dto/pagination.dto';
@@ -14,18 +13,18 @@ import { PaginationUtils, PaginatedResponse } from '../common/utils/pagination.u
 export class PostsService {
   constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
-  async create(createPostDto: CreatePostDto): Promise<ApiResponse<ResponsePostDto>> {
+  async create(createPostDto: CreatePostDto): Promise<ResponsePostDto> {
     const post = new this.postModel(createPostDto);
     const savedPost = await post.save();
-    return ApiResponse.success(this.toDTO(savedPost), 'Post created successfully');
+    return this.toDTO(savedPost);
   }
 
-  async createBulk(createPostDtos: CreatePostDto[]): Promise<ApiResponse<ResponsePostDto[]>> {
+  async createBulk(createPostDtos: CreatePostDto[]): Promise<ResponsePostDto[]> {
     const posts = await this.postModel.insertMany(createPostDtos);
-    return ApiResponse.success(posts.map(post => this.toDTO(post)), 'Posts created successfully');
+    return posts.map(post => this.toDTO(post));
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<ApiResponse<PaginatedResponse<ResponsePostDto>>> {
+  async findAll(paginationDto: PaginationDto): Promise<PaginatedResponse<ResponsePostDto>> {
     const { page, limit } = paginationDto;
     const { skip } = PaginationUtils.getPaginationParams(page, limit);
 
@@ -35,25 +34,25 @@ export class PostsService {
     ]);
 
     const result = PaginationUtils.buildPaginationResponse(posts.map(p => this.toDTO(p)), total, page, limit);
-    return ApiResponse.success(result, 'Posts retrieved successfully');
+    return result;
   }
 
-  async findOne(id: string): Promise<ApiResponse<ResponsePostDto>> {
+  async findOne(id: string): Promise<ResponsePostDto> {
     const post = await this.postModel.findById(id).exec() as PostDocument;
-    return ApiResponse.success(this.toDTO(post), 'Post retrieved successfully');
+    return this.toDTO(post);
   }
 
-  async update(id: string, updatePostDto: UpdatePostDto): Promise<ApiResponse<ResponsePostDto>> {
+  async update(id: string, updatePostDto: UpdatePostDto): Promise<ResponsePostDto> {
     const post = await this.postModel
       .findByIdAndUpdate(id, updatePostDto, { returnDocument: 'after' })
       .exec() as PostDocument;
 
-    return ApiResponse.success(this.toDTO(post), 'Post updated successfully');
+    return this.toDTO(post);
   }
 
-  async remove(id: string): Promise<ApiResponse<undefined>> {
+  async remove(id: string): Promise<undefined> {
     await this.postModel.findByIdAndDelete(id).exec();
-    return ApiResponse.success(undefined, 'Post deleted successfully');
+    return undefined;
   }
 
   private toDTO(post: PostDocument): ResponsePostDto {

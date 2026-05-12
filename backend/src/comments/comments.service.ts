@@ -11,19 +11,19 @@ import { ResponseCommentDto } from './dto/response-comment.dto';
 export class CommentsService {
   constructor(@InjectModel(Comment.name) private commentModel: Model<CommentDocument>) {}
 
-  create(createCommentDto: CreateCommentDto) : ApiResponse<ResponseCommentDto > {
+  create(createCommentDto: CreateCommentDto) : ResponseCommentDto {
     const comment = new this.commentModel(createCommentDto);
-    return ApiResponse.success(this.toDTO(comment), 'Comment created successfully'); 
+    return this.toDTO(comment);
   }
 
-  async findByPostId(postId: string) : Promise<ApiResponse<ResponseCommentDto[]>> {
-    const comments = await this.commentModel.find({ postId }).exec();
-    return ApiResponse.success(comments.map((comment) => this.toDTO(comment)), 'Comments found successfully');
+  async findByPostId(postId: string) : Promise<ResponseCommentDto[]> {
+    const comments = await this.commentModel.find({ postId }).sort({ createdAt: -1 }).exec();
+    return comments.map((comment) => this.toDTO(comment));
   }
 
-  async remove(id: string) : Promise<ApiResponse<void>> {
+  async remove(id: string) : Promise<undefined> {
     await this.commentModel.findByIdAndDelete(id).exec();
-    return ApiResponse.success(undefined, 'Comment removed successfully');
+    return undefined;
   }
 
   private toDTO(comment: CommentDocument) : ResponseCommentDto {

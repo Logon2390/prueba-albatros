@@ -6,34 +6,36 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { ApiResponse } from '../common/responses/api.response';
-import { Post as PostModel } from './schemas/post.schema';
+import { ResponsePostDto } from './dto/response-post.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginatedResponse } from '../common/utils/pagination.utils';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto): Promise<ApiResponse<PostModel>> {
+  create(@Body() createPostDto: CreatePostDto): Promise<ResponsePostDto> {
     return this.postsService.create(createPostDto);
   }
 
   @Post('/bulk')
-  createBulk(@Body() createPostDtos: CreatePostDto[]): Promise<ApiResponse<PostModel[]>> {
+  createBulk(@Body() createPostDtos: CreatePostDto[]): Promise<ResponsePostDto[]> {
     return this.postsService.createBulk(createPostDtos);
   }
 
   @Get()
-  findAll(): Promise<ApiResponse<PostModel[]>> {
-    return this.postsService.findAll();
+  findAll(@Query() paginationDto: PaginationDto): Promise<PaginatedResponse<ResponsePostDto>> {
+    return this.postsService.findAll(paginationDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<ApiResponse<PostModel>> {
+  findOne(@Param('id') id: string): Promise<ResponsePostDto> {
     return this.postsService.findOne(id);
   }
 
@@ -41,12 +43,12 @@ export class PostsController {
   update(
     @Param('id') id: string,
     @Body() updatePostDto: UpdatePostDto,
-  ): Promise<ApiResponse<PostModel>> {
+  ): Promise<ResponsePostDto> {
     return this.postsService.update(id, updatePostDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<ApiResponse<undefined>> {
+  remove(@Param('id') id: string): Promise<undefined> {
     return this.postsService.remove(id);
   }
 }
