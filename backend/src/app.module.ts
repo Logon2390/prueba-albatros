@@ -6,7 +6,7 @@ import { env } from 'process';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(env.DATABASE_URL || 'mongodb://localhost:27017'),
+    MongooseModule.forRoot(env.DATABASE_URL || 'mongodb://mongo:27017/prueba-albatros'),
     PostsModule,
     CommentsModule
   ],
