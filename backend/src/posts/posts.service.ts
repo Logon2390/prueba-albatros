@@ -7,6 +7,8 @@ import { Model } from 'mongoose';
 import { ApiResponse } from '../common/responses/api.response';
 import { ResponsePostDto } from './dto/response-post.dto';
 import { plainToInstance } from 'class-transformer';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginationUtils, PaginatedResponse } from '../common/utils/pagination.utils';
 
 @Injectable()
 export class PostsService {
@@ -23,10 +25,17 @@ export class PostsService {
     return ApiResponse.success(posts.map(post => this.toDTO(post)), 'Posts created successfully');
   }
 
-  async findAll(): Promise<ApiResponse<ResponsePostDto[]>> {
-    const posts = await this.postModel.find().exec();
-    const dto = posts.map(post => this.toDTO(post));
-    return ApiResponse.success(dto, 'Posts retrieved successfully');
+  async findAll(paginationDto: PaginationDto): Promise<ApiResponse<PaginatedResponse<ResponsePostDto>>> {
+    const { page, limit } = paginationDto;
+    const { skip } = PaginationUtils.getPaginationParams(page, limit);
+
+    const [posts, total] = await Promise.all([
+      this.postModel.find().sort({ createdAt: -1 }).skip(skip).limit(limit).exec(),
+      this.postModel.countDocuments().exec(),
+    ]);
+
+    const result = PaginationUtils.buildPaginationResponse(posts.map(p => this.toDTO(p)), total, page, limit);
+    return ApiResponse.success(result, 'Posts retrieved successfully');
   }
 
   async findOne(id: string): Promise<ApiResponse<ResponsePostDto>> {
