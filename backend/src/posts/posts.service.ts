@@ -18,17 +18,17 @@ export class PostsService {
     return this.postModel.find().exec();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.postModel.findById(id).exec();
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
+  update(id: string, updatePostDto: UpdatePostDto) {
     return this.postModel
       .findByIdAndUpdate(id, updatePostDto, { returnDocument: 'after' })
       .exec();
   }
 
-  remove(id: number) {
+  remove(id: string) {
     this.postModel.findByIdAndDelete(id).exec();
     return `This action removes a #${id} post`;
   }
