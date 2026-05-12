@@ -19,7 +19,7 @@ export class CommentsService {
     return comments;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     this.commentModel.findByIdAndDelete(id).exec();
     return `This action removes a #${id} comment`;
   }
