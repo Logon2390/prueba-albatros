@@ -12,6 +12,11 @@ export class PostsController {
     return this.postsService.create(createPostDto);
   }
 
+  @Post('/bulk')
+  createBulk(@Body() createPostDtos: CreatePostDto[]) {
+    return this.postsService.createBulk(createPostDtos);
+  }
+
   @Get()
   findAll() {
     return this.postsService.findAll();

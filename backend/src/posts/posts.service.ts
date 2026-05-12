@@ -14,6 +14,10 @@ export class PostsService {
     return post.save();
   }
 
+  createBulk(createPostDtos: CreatePostDto[]) {
+    return this.postModel.insertMany(createPostDtos);
+  }
+
   findAll() {
     return this.postModel.find().exec();
   }
