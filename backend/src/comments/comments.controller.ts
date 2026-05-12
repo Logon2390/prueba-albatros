@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Query } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
@@ -11,13 +11,13 @@ export class CommentsController {
     return this.commentsService.create(createCommentDto);
   }
 
-  @Get(':id')
-  findByPostId(@Param('id') id: string) {
-    return this.commentsService.findByPostId(id);
+  @Get()
+  findByPostId(@Query('postId') postId: string) {
+    return this.commentsService.findByPostId(postId);
   }
-
+  
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.commentsService.remove(+id);
+    return this.commentsService.remove(id);
   }
 }
