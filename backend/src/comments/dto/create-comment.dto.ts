@@ -1,21 +1,29 @@
-import { IsDateString, IsOptional, IsString } from "class-validator";
+import { IsDateString, IsEmail, IsOptional, IsString } from "class-validator";
+import { Expose } from "class-transformer";
 
 export class CreateCommentDto {
+    @Expose()
     @IsOptional()
     id: string | undefined;
 
+    @Expose()
     @IsString()
     postId!: string;
 
+    @Expose()
     @IsString()
     name!: string;
 
+    @Expose()
     @IsString()
+    @IsEmail()
     email!: string;
 
+    @Expose()
     @IsString()
     body!: string;
 
+    @Expose()
     @IsOptional()
     @IsDateString()
     createdAt!: Date;
