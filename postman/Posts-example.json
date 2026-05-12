@@ -1,0 +1,77 @@
+[
+    {
+        "title": "Introducción a Angular",
+        "body": "Angular es un framework de desarrollo web mantenido por Google que permite crear aplicaciones SPA robustas.",
+        "author": "Carlos Méndez"
+    },
+    {
+        "title": "NestJS desde cero",
+        "body": "NestJS es un framework de Node.js que utiliza TypeScript y sigue una arquitectura modular inspirada en Angular.",
+        "author": "María González"
+    },
+    {
+        "title": "MongoDB para principiantes",
+        "body": "MongoDB es una base de datos NoSQL orientada a documentos que almacena la información en formato BSON.",
+        "author": "Pedro Ramírez"
+    },
+    {
+        "title": "Signals en Angular 18",
+        "body": "Los signals son una nueva primitiva reactiva en Angular que permite gestionar el estado de forma más eficiente y predecible.",
+        "author": "Ana Jiménez"
+    },
+    {
+        "title": "RxJS operadores esenciales",
+        "body": "RxJS es una librería de programación reactiva que incluye operadores como switchMap, catchError, tap y combineLatest.",
+        "author": "Luis Herrera"
+    },
+    {
+        "title": "Docker para desarrolladores",
+        "body": "Docker permite empaquetar aplicaciones en contenedores para garantizar que funcionen igual en cualquier entorno de ejecución.",
+        "author": "Sofía Castro"
+    },
+    {
+        "title": "Clean Code en TypeScript",
+        "body": "Escribir código limpio en TypeScript implica usar nombres descriptivos, funciones pequeñas y una correcta separación de responsabilidades.",
+        "author": "Jorge Vargas"
+    },
+    {
+        "title": "Formularios reactivos en Angular",
+        "body": "Los formularios reactivos de Angular ofrecen un enfoque basado en código para manejar validaciones y estados del formulario de forma robusta.",
+        "author": "Daniela Torres"
+    },
+    {
+        "title": "JWT y autenticación en NestJS",
+        "body": "JSON Web Tokens permiten implementar autenticación stateless en APIs REST de forma segura y escalable con NestJS.",
+        "author": "Andrés Mora"
+    },
+    {
+        "title": "Mongoose schemas avanzados",
+        "body": "Mongoose permite definir schemas con validaciones, hooks y métodos personalizados para modelar los datos en MongoDB de forma eficiente.",
+        "author": "Valentina Ríos"
+    },
+    {
+        "title": "Arquitectura modular con NestJS",
+        "body": "NestJS promueve una arquitectura modular donde cada funcionalidad se encapsula en módulos independientes con sus controladores y servicios.",
+        "author": "Ricardo Solano"
+    },
+    {
+        "title": "Manejo de errores en Angular",
+        "body": "Angular permite interceptar errores HTTP globalmente usando HttpInterceptor para centralizar el manejo y mostrar mensajes amigables al usuario.",
+        "author": "Camila Navarro"
+    },
+    {
+        "title": "Tailwind CSS en proyectos modernos",
+        "body": "Tailwind CSS es un framework de utilidades que permite construir interfaces responsivas y personalizadas directamente desde el HTML sin salir del markup.",
+        "author": "Sebastián Flores"
+    },
+    {
+        "title": "Testing unitario con Jest",
+        "body": "Jest es el framework de testing más popular en el ecosistema JavaScript y NestJS lo incluye por defecto para escribir pruebas unitarias y de integración.",
+        "author": "Isabella Ruiz"
+    },
+    {
+        "title": "Buenas prácticas en APIs REST",
+        "body": "Una API REST bien diseñada usa correctamente los verbos HTTP, retorna códigos de estado apropiados y mantiene respuestas estandarizadas y consistentes.",
+        "author": "Felipe Mendoza"
+    }
+]
