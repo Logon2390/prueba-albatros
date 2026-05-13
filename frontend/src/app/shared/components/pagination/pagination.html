@@ -1,0 +1,35 @@
+@if (totalPages > 1) {
+  <div class="flex items-center justify-between px-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg">
+    <div class="text-sm text-on-surface-variant">
+      Mostrando {{ startItem }} hasta {{ endItem }} de {{ totalItems }} resultados
+    </div>
+
+    <nav class="flex items-center gap-1">
+      <app-button
+        (click)="onPrevious()"
+        [disabled]="!canGoPrevious"
+        variant="ghost"
+        size="sm"
+        icon="icon-[lucide--chevron-left]"
+      />
+
+      @for (page of visiblePages; track page) {
+        <app-button
+          (click)="onPageChange(page)"
+          [isActive]="page === currentPage"
+          variant="ghost"
+          size="sm"
+          text="{{ page }}"
+        />
+      }
+
+      <app-button
+        (click)="onNext()"
+        [disabled]="!canGoNext"
+        variant="ghost"
+        size="sm"
+        icon="icon-[lucide--chevron-right]"
+      />
+    </nav>
+  </div>
+}
