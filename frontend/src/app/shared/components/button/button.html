@@ -1,0 +1,24 @@
+<button
+  (click)="handleClick()"
+  [disabled]="disabled"
+  [class]="[
+    'rounded-lg flex items-center justify-center gap-2 font-label-md transition-colors',
+    variant === 'primary' ? 'bg-primary text-on-primary hover:bg-primary-hover' : '',
+    variant === 'secondary' ? 'bg-secondary text-on-secondary hover:bg-secondary-hover' : '',
+    variant === 'outline' ? 'border border-outline text-on-surface hover:bg-surface-hover' : '',
+    variant === 'ghost' ? 'text-on-surface-variant hover:bg-surface-hover' : '',
+    size === 'sm' ? 'px-3 py-1.5 text-sm' : '',
+    size === 'md' ? 'px-4 py-2' : '',
+    size === 'lg' ? 'px-6 py-2.5 text-base' : '',
+    fullWidth ? 'w-full' : '',
+    disabled ? 'opacity-50 cursor-not-allowed' : ''
+  ].join(' ')"
+>
+  @if (icon) {
+    <span [class]="iconClasses" [style.color]="iconColor"></span>
+  }
+  @if (text) {
+    {{ text }}
+  }
+  <ng-content></ng-content>
+</button>
