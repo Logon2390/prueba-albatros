@@ -1,3 +1,105 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+@plugin "@iconify/tailwind4";
+@theme {
+    --color-sky-blue-50: #eaf5fa;
+    --color-sky-blue-100: #d5ecf6;
+    --color-sky-blue-200: #acd9ec;
+    --color-sky-blue-300: #82c6e3;
+    --color-sky-blue-400: #59b3d9;
+    --color-sky-blue-500: #2fa0d0;
+    --color-sky-blue-600: #2680a6;
+    --color-sky-blue-700: #1c607d;
+    --color-sky-blue-800: #134053;
+    --color-sky-blue-900: #09202a;
+    --color-sky-blue-950: #07161d;
+
+    --color-blue-bell-50: #eaf4fa;
+    --color-blue-bell-100: #d6eaf5;
+    --color-blue-bell-200: #add4eb;
+    --color-blue-bell-300: #84bfe1;
+    --color-blue-bell-400: #5baad7;
+    --color-blue-bell-500: #3294cd;
+    --color-blue-bell-600: #2877a4;
+    --color-blue-bell-700: #1e597b;
+    --color-blue-bell-800: #143b52;
+    --color-blue-bell-900: #0a1e29;
+    --color-blue-bell-950: #07151d;
+
+    --color-navy-50: #eae7fe;
+    --color-navy-100: #d4cefd;
+    --color-navy-200: #aa9dfb;
+    --color-navy-300: #7f6cf9;
+    --color-navy-400: #543bf7;
+    --color-navy-500: #290af5;
+    --color-navy-600: #2108c4;
+    --color-navy-700: #190693;
+    --color-navy-800: #110462;
+    --color-navy-900: #080231;
+    --color-navy-950: #060122;
+
+    --color-deep-twilight-50: #e9e9fb;
+    --color-deep-twilight-100: #d3d3f8;
+    --color-deep-twilight-200: #a8a8f0;
+    --color-deep-twilight-300: #7c7ce9;
+    --color-deep-twilight-400: #5151e1;
+    --color-deep-twilight-500: #2525da;
+    --color-deep-twilight-600: #1e1eae;
+    --color-deep-twilight-700: #161683;
+    --color-deep-twilight-800: #0f0f57;
+    --color-deep-twilight-900: #07072c;
+    --color-deep-twilight-950: #05051f;
+
+    --color-ocean-twilight-50: #ebedf9;
+    --color-ocean-twilight-100: #d8daf3;
+    --color-ocean-twilight-200: #b1b5e7;
+    --color-ocean-twilight-300: #8a91db;
+    --color-ocean-twilight-400: #636ccf;
+    --color-ocean-twilight-500: #3c47c3;
+    --color-ocean-twilight-600: #30399c;
+    --color-ocean-twilight-700: #242b75;
+    --color-ocean-twilight-800: #181c4e;
+    --color-ocean-twilight-900: #0c0e27;
+    --color-ocean-twilight-950: #080a1b;
+
+    --color-primary: #2fa0d0;
+    --color-primary-hover: #2680a6;
+    --color-primary-dark: #1c607d;
+    --color-primary-subtle: #eaf5fa;
+    --color-primary-muted: #acd9ec;
+
+    --color-accent: #290af5;
+    --color-accent-hover: #2108c4;
+    --color-accent-subtle: #eae7fe;
+
+    --color-secondary: #3c47c3;
+    --color-secondary-hover: #30399c;
+    --color-secondary-subtle: #ebedf9;
+
+    --color-brand: #2525da;
+    --color-brand-dark: #0f0f57;
+    --color-brand-darker: #07072c;
+    --color-brand-muted: #7c7ce9;
+
+    --color-surface: #ebedf9;
+    --color-surface-hover: #d8daf3;
+    --color-surface-border: #b1b5e7;
+    --color-surface-strong: #8a91db;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f0f4f8;
+    --color-surface-container: #eaeef2;
+    --color-surface-container-high: #e5e9ed;
+    --color-surface-container-highest: #dfe3e7;
+    --color-on-surface: #181c1f;
+    --color-on-surface-variant: #3e484e;
+    --color-on-background: #181c1f;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #003246;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #fffbff;
+    --color-error: #ef4444;
+    --color-on-error: #ffffff;
+    --color-outline: #6e787f;
+    --color-outline-variant: #bec8cf;
+}
