@@ -18,6 +18,7 @@ export class Button {
   @Input() iconColor: string = '';
   @Input() disabled: boolean = false;
   @Input() fullWidth: boolean = false;
+  @Input() isActive: boolean = false;
   @Output() onClick = new EventEmitter<void>();
 
   handleClick(): void {
@@ -27,7 +28,7 @@ export class Button {
   }
 
   get iconClasses(): string {
-    const classes = ['iconify', `icon-[${this.icon}]`];
+    const classes = [`${this.icon}`];
     const sizeMap: Record<ButtonSize, string> = { 
       sm: 'text-base', 
       md: 'text-xl', 
