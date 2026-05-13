@@ -1,0 +1,48 @@
+@if (post) {
+  <div
+    (click)="onView()"
+    class="bg-surface border border-surface-border rounded-xl hover:border-surface-strong hover:shadow-md transition-all duration-300 group flex flex-col min-h-65 p-4 hover:cursor-pointer"
+  >
+    <div class="flex items-center gap-3 mb-4">
+      <div class="size-8 rounded-full flex items-center justify-center text-base font-bold bg-ocean-twilight-400 text-white">
+        {{ initials }}
+      </div>
+      <div class="flex-1">
+        <p class="font-label-md text-[13px] text-on-surface font-medium leading-none">
+          {{ post.author || 'Anonymous' }}
+        </p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">
+          {{ formatDate(post.createdAt) }}
+        </p>
+      </div>
+    </div>
+
+    <h3
+      class="font-title-md text-[15px] font-medium text-on-surface line-clamp-2 mb-2 group-hover:text-primary transition-colors"
+    >
+      {{ post.title }}
+    </h3>
+    <p class="font-body-md text-[13px] text-on-surface-variant line-clamp-3 mb-6 flex-1">
+      {{ post.body }}
+    </p>
+
+    <div class="flex items-center justify-end mt-auto pt-4 border-t border-surface-border/50">
+      <div class="flex items-center gap-1">
+        <app-button
+          (click)="$event.stopPropagation(); onEdit()"
+          variant="ghost"
+          size="sm"
+          title="Editar post"
+          icon="icon-[lucide--edit]"
+        />
+        <app-button
+          (click)="$event.stopPropagation(); onDelete()"
+          variant="ghost"
+          size="sm"
+          title="Eliminar post"
+          icon="icon-[lucide--trash-2]"
+        />
+      </div>
+    </div>
+  </div>
+}
