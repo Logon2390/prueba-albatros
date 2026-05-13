@@ -17,7 +17,6 @@ export class EmptyState {
   icon = input<string>('icon-[lucide--circle-alert]');
   actionText = input<string>('');
   actionVariant = input<'primary' | 'secondary' | 'outline' | 'ghost'>('primary');
-
   action = output<void>();
 
   onAction(): void {
