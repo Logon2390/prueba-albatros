@@ -17,7 +17,7 @@ export interface NavItem {
 export class Navbar {
   @Input() title: string = 'Post';
   @Input() buttonText: string = 'Nuevo Post';
-  @Input() buttonIcon: string = 'material-symbols--post-add';
+  @Input() buttonIcon: string = 'icon-[lucide--plus]';
 
   onCreateClick(): void {
     console.log('Create clicked');
