@@ -1,0 +1,77 @@
+<div class="max-w-7xl mx-auto">
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+    <div>
+      <h1 class="text-on-background">Posts</h1>
+      <p class="text-on-surface-variant">{{ totalItems() }} posts</p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-4 items-center w-full md:w-auto">
+      @if (posts().length > 0) {
+        <div class="relative w-full sm:w-72">
+          <app-input
+            type="text"
+            placeholder="Buscar por título"
+            [value]="search()"
+            (valueChange)="onSearchChange($event)"
+          />
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-6">
+    @if (isLoading()) {
+      <app-loader />
+    } @else if (errorMessage()) {
+      <app-empty-state
+        icon="icon-[lucide--alert-triangle]"
+        title="Algo salió mal"
+        description="{{ errorMessage() }}"
+        actionText="Intentar de nuevo"
+        actionVariant="secondary"
+        class="flex items-center justify-center"
+        (action)="onReload()"
+      />
+    } @else if (posts().length === 0) {
+      <app-empty-state
+        icon="icon-[lucide--search]"
+        title="No hay posts disponibles"
+        description="Crea tu primer post para comenzar."
+        actionText="Crear post"
+        class="flex items-center justify-center"
+      />
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        @for (post of filteredPosts(); track post.id) {
+          <app-post
+            [post]="post"
+            (view)="onViewPost($event)"
+            (edit)="onEditPost($event)"
+            (delete)="onDeletePost($event)"
+          />
+        }
+      </div>
+
+      <app-modal
+        [open]="deleteModalOpen()"
+        title="Eliminar post"
+        description="Esta accion no se puede deshacer. Vas a eliminar este post de forma permanente."
+        (closed)="onCloseModal()"
+      >
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
+          <app-button variant="outline" size="md" text="Cancelar" (onClick)="onCloseModal()" />
+          <app-button variant="primary" size="md" text="Eliminar" (onClick)="onConfirmDelete()" />
+        </div>
+      </app-modal>
+
+      <div class="mt-12">
+        <app-pagination
+          [currentPage]="currentPage()"
+          [totalPages]="totalPages()"
+          [totalItems]="totalItems()"
+          [itemsPerPage]="itemsPerPage()"
+          (pageChange)="onPageChange($event)"
+        />
+      </div>
+    }
+  </div>
+</div>
