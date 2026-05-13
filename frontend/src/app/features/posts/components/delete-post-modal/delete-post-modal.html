@@ -1,0 +1,11 @@
+<app-modal
+  [open]="isOpen()"
+  title="Eliminar post"
+  description="Esta accion no se puede deshacer. Vas a eliminar este post de forma permanente."
+  (closed)="onClose()"
+>
+  <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
+    <app-button variant="outline" size="md" text="Cancelar" (onClick)="onClose()" />
+    <app-button variant="primary" size="md" text="Eliminar" (onClick)="onConfirm()" />
+  </div>
+</app-modal>

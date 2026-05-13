@@ -46,22 +46,15 @@
             [post]="post"
             (view)="onViewPost($event)"
             (edit)="onEditPost($event)"
-            (delete)="onDeletePost($event)"
+            (delete)="onDeletePost($event, deleteModal)"
           />
         }
+        <app-delete-post-modal
+          #deleteModal
+          (confirm)="onConfirmDelete(deleteModal)"
+          (closed)="onCloseDeleteModal()"
+        />
       </div>
-
-      <app-modal
-        [open]="deleteModalOpen()"
-        title="Eliminar post"
-        description="Esta accion no se puede deshacer. Vas a eliminar este post de forma permanente."
-        (closed)="onCloseModal()"
-      >
-        <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
-          <app-button variant="outline" size="md" text="Cancelar" (onClick)="onCloseModal()" />
-          <app-button variant="primary" size="md" text="Eliminar" (onClick)="onConfirmDelete()" />
-        </div>
-      </app-modal>
 
       <div class="mt-12">
         <app-pagination

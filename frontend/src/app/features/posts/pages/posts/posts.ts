@@ -27,13 +27,12 @@ import { Post } from '@features/posts/model/post.model';
 import { PaginatedResponse } from '@app/shared/model/api-response.model';
 
 //componentes
-import { Button } from '@app/shared/components/button/button';
 import { AppInput } from '@app/shared/components/input/input';
-import { Modal } from '@app/shared/components/modal/modal';
 import { EmptyState } from '@app/shared/components/empty-state/empty-state';
 import { Loader } from '@app/shared/components/loader/loader';
 import { PostItem } from '@app/features/posts/components/post/post';
 import { Pagination } from '@shared/components/pagination/pagination';
+import { DeletePostModal } from '@app/features/posts/components/delete-post-modal/delete-post-modal';
 
 const EMPTY_RESPONSE: PaginatedResponse<Post> = {
   data: [],
@@ -54,11 +53,10 @@ const EMPTY_RESPONSE: PaginatedResponse<Post> = {
     RouterModule,
     PostItem,
     Pagination,
-    Button,
     AppInput,
-    Modal,
     EmptyState,
     Loader,
+    DeletePostModal,
   ],
   templateUrl: './posts.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -67,6 +65,7 @@ export class PostsPage implements OnDestroy {
   private readonly router = inject(Router);
   private readonly postService = inject(PostService);
 
+  readonly selectedPostId = signal<string | null>(null);
   readonly currentPage = signal(1);
   readonly itemsPerPage = signal(6);
   readonly isLoading = signal(false);
@@ -116,9 +115,6 @@ export class PostsPage implements OnDestroy {
     return term ? 1 : (this.response().meta?.totalPages ?? 1);
   });
 
-  readonly deleteModalOpen = signal(false);
-  readonly selectedPostId = signal<string | null>(null);
-
   onPageChange(page: number): void {
     this.currentPage.set(page);
   }
@@ -135,33 +131,28 @@ export class PostsPage implements OnDestroy {
     this.router.navigate(['/posts', id, 'edit']);
   }
 
-  onDeletePost(id: string): void {
+  onDeletePost(id: string, modal: DeletePostModal): void {
     this.selectedPostId.set(id);
-    this.deleteModalOpen.set(true);
+    modal.open();
   }
 
-  onConfirmDelete(): void {
+  onConfirmDelete(modal: DeletePostModal): void {
     const postId = this.selectedPostId();
     if (!postId) return;
 
     this.postService.remove(postId).subscribe({
       next: () => {
         this.onReload();
-        this.onCloseModal();
+        modal.close();
       },
       error: () => {
         alert('No se pudo eliminar el post. Por favor, intenta de nuevo.');
-        this.onCloseModal();
+        modal.close();
       },
     });
   }
 
-  onCreatePost(): void {
-    this.router.navigate(['/posts/new']);
-  }
-
-  onCloseModal(): void {
-    this.deleteModalOpen.set(false);
+  onCloseDeleteModal(): void {
     this.selectedPostId.set(null);
   }
 
