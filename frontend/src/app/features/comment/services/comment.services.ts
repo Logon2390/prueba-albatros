@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, retry } from 'rxjs/operators';
+import { delay, map, retry } from 'rxjs/operators';
 import { Comment } from '../model/comment.model';
 import { ApiResponse} from '@app/shared/model/api-response.model';
 
@@ -21,6 +21,7 @@ export class CommentService {
   findByPostId(postId: string): Observable<Comment[]> {
     const params = new HttpParams().set('postId', postId);
     return this.http.get<ApiResponse<Comment[]>>(BASE_URL, { params }).pipe(
+      delay(500),
       retry(2),
       map((response) => response.data ?? []),
     );
