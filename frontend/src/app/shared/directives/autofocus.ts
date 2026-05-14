@@ -1,11 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  inject,
-  input,
-  OnInit,
-  booleanAttribute
-} from '@angular/core';
+import { Directive, ElementRef, inject, input, OnInit, booleanAttribute } from '@angular/core';
 
 @Directive({
   selector: '[appAutoFocus]',
@@ -14,10 +7,9 @@ export class AutoFocusDirective implements OnInit {
   private readonly el = inject(ElementRef<HTMLElement>);
 
   // Permite desactivarla condicionalmente
-    readonly appAutoFocus = input<boolean, unknown>(true, {
+  readonly appAutoFocus = input<boolean, unknown>(true, {
     transform: booleanAttribute,
   });
-
 
   ngOnInit(): void {
     if (!this.appAutoFocus()) return;
