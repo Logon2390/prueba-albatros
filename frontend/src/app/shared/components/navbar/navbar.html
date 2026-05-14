@@ -1,4 +1,6 @@
-<header class="fixed top-0 w-full z-40 bg-surface-container-lowest border-b border-surface-border flex justify-between items-center h-16 px-6">
+<header
+  class="fixed top-0 w-full z-40 bg-surface-container-lowest border-b border-surface-border flex justify-between items-center h-16 px-6"
+>
   <div class="flex items-center gap-4">
     @if (title) {
       <div class="flex flex-col">
@@ -7,14 +9,16 @@
     }
   </div>
   <div class="flex items-center gap-3">
-    <app-user [name]="userName()" />
-    <span class="text-sm text-on-surface-variant">{{ userName() }}</span>
-    <app-button
-      variant="ghost"
-      size="sm"
-      icon="icon-[lucide--log-out]"
-      text="Salir"
-      (onClick)="onLogout()"
-    />
+    @if (isLoggedIn()) {
+      <app-user />
+      <span class="text-sm text-on-surface-variant">{{ userName() }}</span>
+      <app-button
+        variant="ghost"
+        size="sm"
+        icon="icon-[lucide--log-out]"
+        text="Salir"
+        (onClick)="onLogout()"
+      />
+    }
   </div>
 </header>
