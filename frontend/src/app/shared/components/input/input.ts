@@ -1,12 +1,11 @@
-import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './input.html',
   providers: [
     {
@@ -17,16 +16,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class AppInput implements ControlValueAccessor {
-  @Input() placeholder: string = '';
-  @Input() value: string = '';
-  @Input() type: string = 'text';
-  @Input() label: string = '';
-  @Input() id: string = '';
-  @Input() className: string = '';
-  @Input() error: boolean = false;
-  @Input() errorText: string = '';
-  @Input() disabled: boolean = false;
-  @Output() valueChange = new EventEmitter<string>();
+  @Input() placeholder = '';
+  @Input() type = 'text';
+  @Input() label = '';
+  @Input() id = '';
+  @Input() error = false;
+  @Input() errorText = '';
+  @Output() blur = new EventEmitter<void>();
+
+  protected value = '';
+  protected isDisabled = false;
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
@@ -48,17 +47,17 @@ export class AppInput implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.isDisabled = isDisabled;
   }
 
   onInput(event: Event): void {
-    const nextValue = (event.target as HTMLInputElement).value;
-    this.value = nextValue;
-    this.valueChange.emit(nextValue);
-    this.onChange(nextValue);
+    const value = (event.target as HTMLInputElement).value;
+    this.value = value;
+    this.onChange(value);
   }
 
   onBlur(): void {
     this.onTouched();
+    this.blur.emit();
   }
 }
