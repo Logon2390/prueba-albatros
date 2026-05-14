@@ -1,0 +1,11 @@
+<div
+  class="pointer-events-auto flex w-80 max-w-[92vw] items-start gap-3 rounded-2xl border px-4 py-3 shadow-sm"
+  [class]="containerClasses()"
+  role="status"
+  aria-live="polite"
+>
+  <span class="mt-0.5 flex size-8 p-2 items-center justify-center rounded-md" [class]="iconWrapperClasses()">
+    <span class="text-lg" [class]="iconName()"></span>
+  </span>
+  <p class="text-sm leading-relaxed" [class]="messageClasses()">{{ message() }}</p>
+</div>

@@ -1,0 +1,7 @@
+@if (visibleNotifications().length) {
+  <div class="notification-stack">
+    @for (notification of visibleNotifications(); track notification.id) {
+      <app-notification [type]="notification.type" [message]="notification.message" />
+    }
+  </div>
+}
