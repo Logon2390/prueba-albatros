@@ -22,9 +22,10 @@ export class AppInput implements ControlValueAccessor {
   @Input() id = '';
   @Input() error = false;
   @Input() errorText = '';
+  @Input() value = '';
   @Output() blur = new EventEmitter<void>();
+  @Output() valueChange = new EventEmitter<string>();
 
-  protected value = '';
   protected isDisabled = false;
 
   private onChange: (value: string) => void = () => {};
@@ -53,6 +54,7 @@ export class AppInput implements ControlValueAccessor {
   onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.value = value;
+    this.valueChange.emit(value);
     this.onChange(value);
   }
 
