@@ -1,27 +1,67 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs';
+import { ApiResponse } from '@app/shared/model/api-response.model';
+import { AuthTokens, LoginPayload } from '@app/shared/model/auth.model';
+import {
+  clearStorageSession,
+  getStorageItem,
+  setStorageSession,
+  setStorageTokens,
+} from '@core/utils/auth.utils';
+
+const BASE_URL = 'http://localhost:3000/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly _userName = signal(localStorage.getItem('name') ?? 'Anonymous');
-  private readonly _userEmail = signal(localStorage.getItem('email') ?? '');
+  private readonly http = inject(HttpClient);
+  private readonly router = inject(Router);
+
+  private readonly _userName = signal(getStorageItem('name'));
+  private readonly _userEmail = signal(getStorageItem('email'));
+  private readonly _accessToken = signal(getStorageItem('accessToken'));
+  private readonly _refreshToken = signal(getStorageItem('refreshToken'));
 
   readonly userName = this._userName.asReadonly();
   readonly userEmail = this._userEmail.asReadonly();
-  readonly isLoggedIn = computed(() => this._userName() !== 'Anonymous');
+  readonly accessToken = this._accessToken.asReadonly();
+  readonly isLoggedIn = computed(() => !!this._accessToken());
 
-  login(name: string, email: string): void {
-    localStorage.setItem('name', name);
-    localStorage.setItem('email', email);
-    this._userName.set(name);
-    this._userEmail.set(email);
+  login(payload: LoginPayload) {
+    return this.http.post<ApiResponse<AuthTokens>>(`${BASE_URL}/login`, payload).pipe(
+      tap((response) => {
+        const { accessToken, refreshToken } = response.data!;
+        setStorageSession(payload.name, payload.email, accessToken, refreshToken);
+        this._userName.set(payload.name);
+        this._userEmail.set(payload.email);
+        this._accessToken.set(accessToken);
+        this._refreshToken.set(refreshToken);
+      }),
+    );
   }
 
-  logout(router: Router): void {
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
+  refresh() {
+    return this.http
+      .post<ApiResponse<AuthTokens>>(`${BASE_URL}/refresh`, {
+        refreshToken: this._refreshToken(),
+      })
+      .pipe(
+        tap((response) => {
+          const { accessToken, refreshToken } = response.data!;
+          setStorageTokens(accessToken, refreshToken);
+          this._accessToken.set(accessToken);
+          this._refreshToken.set(refreshToken);
+        }),
+      );
+  }
+
+  logout(): void {
+    clearStorageSession();
     this._userName.set('Anonymous');
     this._userEmail.set('');
-    router.navigate(['']);
+    this._accessToken.set('');
+    this._refreshToken.set('');
+    this.router.navigate(['']);
   }
 }
