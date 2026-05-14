@@ -19,6 +19,7 @@ import {
 import { AppTextArea } from '@app/shared/components/text-area/text-area';
 import { CommentService } from '@app/features/comment/services/comment.services';
 import { Comment as CommentModel } from '@app/features/comment/model/comment.model';
+import { NotificationService } from '@app/core/services/notification.service';
 
 @Component({
   selector: 'app-details',
@@ -43,6 +44,7 @@ export class Details {
   private readonly route = inject(ActivatedRoute);
   private readonly postService = inject(PostService);
   private readonly commentService = inject(CommentService);
+  private readonly notificationService = inject(NotificationService);
 
   readonly comments = signal<CommentModel[]>([]);
   readonly selectedPostId = signal<string | null>(null);
@@ -113,9 +115,11 @@ export class Details {
     if (id) {
       this.postService.remove(id).subscribe({
         next: () => {
+          this.notificationService.show('success', 'Post eliminado exitosamente.');
           this.router.navigate(['/posts']);
         },
         error: () => {
+          this.notificationService.show('error', 'No se pudo eliminar el post.');
           this.errorMessage.set('No se pudo eliminar el post.');
         },
       });
@@ -147,11 +151,13 @@ export class Details {
 
     this.commentService.remove(commentId).subscribe({
       next: () => {
+        this.notificationService.show('success', 'Comentario eliminado exitosamente.');
         this.onDeleteComment(commentId);
         this.onCloseDeleteCommentModal();
       },
       error: () => {
         this.errorMessage.set('No se pudo eliminar el comentario.');
+        this.notificationService.show('error', 'No se pudo eliminar el comentario.');
       },
     });
   }
@@ -174,11 +180,13 @@ export class Details {
 
     this.postService.update(postId, formPayload).subscribe({
       next: (updatedPost) => {
+        this.notificationService.show('success', 'Post actualizado exitosamente.');
         this.postState.set(updatedPost);
         close();
       },
       error: () => {
         this.errorMessage.set('No se pudo actualizar el post.');
+        this.notificationService.show('error', 'No se pudo actualizar el post.');
       },
     });
   }

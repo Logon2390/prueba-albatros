@@ -36,6 +36,7 @@ import { PostItem } from '@app/features/posts/components/post/post';
 import { Pagination } from '@shared/components/pagination/pagination';
 import { DeletePostModal } from '@app/features/posts/components/delete-post-modal/delete-post-modal';
 import { CreatePostModal } from '@features/posts/components/create-post-modal/create-post-modal';
+import { NotificationService } from '@app/core/services/notification.service';
 
 const EMPTY_RESPONSE: PaginatedResponse<Post> = {
   data: [],
@@ -69,6 +70,7 @@ const EMPTY_RESPONSE: PaginatedResponse<Post> = {
 export class PostsPage implements OnDestroy {
   private readonly router = inject(Router);
   private readonly postService = inject(PostService);
+  private readonly notificationService = inject(NotificationService);
 
   readonly selectedPostId = signal<string | null>(null);
   readonly currentPage = signal(1);
@@ -147,11 +149,15 @@ export class PostsPage implements OnDestroy {
 
     this.postService.remove(postId).subscribe({
       next: () => {
+        this.notificationService.show('success', 'Post eliminado exitosamente.');
         this.onReload();
         modal.close();
       },
       error: () => {
-        alert('No se pudo eliminar el post. Por favor, intenta de nuevo.');
+        this.notificationService.show(
+          'error',
+          'No se pudo eliminar el post. Por favor, intenta de nuevo.',
+        );
         modal.close();
       },
     });
@@ -167,21 +173,31 @@ export class PostsPage implements OnDestroy {
 
   onSubmitCreatePost(payload: CreatePost): void {
     const { close, mode, postId, ...formPayload } = payload;
-    const request$ = mode === 'edit' && postId
-      ? this.postService.update(postId, formPayload)
-      : this.postService.create(formPayload);
+    const request$ =
+      mode === 'edit' && postId
+        ? this.postService.update(postId, formPayload)
+        : this.postService.create(formPayload);
 
     request$.subscribe({
       next: () => {
+        this.notificationService.show(
+          'success',
+          mode === 'edit' ? 'Post actualizado exitosamente.' : 'Post creado exitosamente.',
+        );
         this.onReload();
         close();
       },
       error: () => {
-        alert(
-          mode === 'edit'
-            ? 'No se pudo actualizar el post. Por favor, intenta de nuevo.'
-            : 'No se pudo crear el post. Por favor, intenta de nuevo.',
-        );
+        let message = '';
+        if (mode === 'edit') {
+          message = 'No se pudo actualizar el post. Por favor, intenta de nuevo.';
+        }
+
+        if (mode === 'create') {
+          message = 'No se pudo crear el post. Por favor, intenta de nuevo.';
+        }
+
+        this.notificationService.show('error', message);
       },
     });
   }
