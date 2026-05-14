@@ -6,10 +6,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '@features/home/services/auth.service';
 import { Button } from '@app/shared/components/button/button';
 import { AppInput } from '@app/shared/components/input/input';
+import { AutoFocusDirective } from '@app/shared/directives/autofocus';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, ReactiveFormsModule, AppInput, Button],
+  imports: [CommonModule, ReactiveFormsModule, AppInput, Button, AutoFocusDirective],
   templateUrl: './home.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
