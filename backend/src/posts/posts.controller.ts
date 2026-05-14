@@ -8,6 +8,8 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
+import { JwtGuard } from '../auth/jwt.guard';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -16,6 +18,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResponse } from '../common/utils/pagination.utils';
 
 @Controller('posts')
+@UseGuards(JwtGuard)
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
