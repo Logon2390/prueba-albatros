@@ -12,7 +12,7 @@ import { User } from '@app/shared/components/user/user';
 })
 export class Comment {
   id = input.required<string>();
-  name = input.required<string>();
+  userName = input.required<string>();
   email = input.required<string>();
   time = input.required<string>();
   body = input.required<string>();
