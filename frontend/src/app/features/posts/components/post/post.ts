@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Button } from '@app/shared/components/button/button';
 import { Post as PostModel } from '@features/posts/model/post.model';
 import { formatDate } from '@app/core/utils/format.utils';
+import { User } from '@app/shared/components/user/user';
 
 @Component({
   selector: 'app-post',
-  imports: [CommonModule, Button],
+  imports: [CommonModule, Button, User],
   templateUrl: './post.html',
 })
 export class PostItem {
@@ -28,16 +29,5 @@ export class PostItem {
 
   onView(): void {
     this.view.emit(this.post.id);
-  }
-
-  get initials(): string {
-    const parts = (this.post.author || 'Anonymous').trim().split(/\s+/);
-    const first = parts[0]?.[0] ?? 'A';
-    const second = parts[1]?.[0] ?? '';
-    return `${first}${second}`.toUpperCase();
-  }
-  
-  get totalComments(): number {
-    return 100;
   }
 }
