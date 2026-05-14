@@ -4,8 +4,8 @@ export interface Post {
   title: string;
   body: string;
   author: string;
-  createdAt: string | Date;
-  updatedAt: string | Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 
