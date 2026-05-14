@@ -1,0 +1,23 @@
+<article
+  class="flex gap-4 w-full rounded-2xl border border-surface-border bg-surface p-5 shadow-sm"
+>
+  <app-user [name]="name()" />
+  <div class="flex-1">
+    <div class="flex justify-between items-center gap-3">
+      <div>
+        <div class="flex items-center justify-center">
+          <h4 class="font-title-md text-on-surface">{{ name() }}</h4>
+          <span class="mx-2 text-on-surface-variant">•</span>
+          <span class="text-sm text-on-surface-variant">{{ email() }}</span>
+        </div>
+        <span class="text-sm text-on-surface-variant">{{ timeAgo() }}</span>
+      </div>
+      @if (showDelete()) {
+        <app-button variant="ghost" size="sm" text="Eliminar" (onClick)="onDelete()" />
+      }
+    </div>
+    <p class="mt-3 text-on-surface-variant leading-relaxed">
+      {{ body() }}
+    </p>
+  </div>
+</article>
