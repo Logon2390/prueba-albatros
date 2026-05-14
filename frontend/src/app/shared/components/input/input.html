@@ -7,9 +7,21 @@
   <input
     [id]="id"
     [type]="type"
-    [(ngModel)]="value"
-    (ngModelChange)="valueChange.emit($event)"
+    [value]="value"
     [placeholder]="placeholder"
+    [disabled]="disabled"
+    [attr.aria-invalid]="error"
+    [attr.aria-describedby]="error ? errorId : null"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
     class="w-full px-4 py-2 rounded-lg border transition-all duration-200 outline-none bg-white border-surface-border text-navy-900 placeholder:text-navy-400 hover:border-primary hover:shadow-sm focus:border-primary focus:ring-2 focus:ring-primary-subtle focus:ring-offset-1"
+    [class.border-error]="error"
+    [class.focus:border-error]="error"
+    [class.focus:ring-error/20]="error"
+    [class.opacity-60]="disabled"
+    [class.cursor-not-allowed]="disabled"
   />
+  @if (error && errorText) {
+    <p [id]="errorId" class="mt-1 text-xs text-error pl-2.5">{{ errorText }}</p>
+  }
 </div>
