@@ -47,9 +47,9 @@ export class CreatePostModal {
   readonly noWhitespace: ValidatorFn = noWhitespace;
 
   readonly form = inject(FormBuilder).group({
-    title: ['', [Validators.required, noWhitespace, Validators.minLength(3)]],
+    title: ['', [Validators.required, noWhitespace, Validators.minLength(3), Validators.maxLength(50)]],
     author: ['', [Validators.required, noWhitespace]],
-    body: ['', [Validators.required, noWhitespace, Validators.minLength(10)]],
+    body: ['', [Validators.required, noWhitespace, Validators.minLength(10), Validators.maxLength(255)]],
   });
 
   open(mode: 'create' | 'edit' = 'create', post?: Post): void {
@@ -111,6 +111,7 @@ export class CreatePostModal {
     if (control.errors['required']) return 'El titulo es requerido.';
     if (control.errors['minlength']) return 'El titulo debe tener al menos 3 caracteres.';
     if (control.errors['whitespace']) return 'El titulo ingresado no es válido.';
+    if (control.errors['maxlength']) return 'El titulo no puede exceder los 50 caracteres.';
     return '';
   }
 
@@ -128,6 +129,7 @@ export class CreatePostModal {
     if (control.errors['required']) return 'El texto es requerido.';
     if (control.errors['minlength']) return 'El texto debe tener al menos 10 caracteres.';
     if (control.errors['whitespace']) return 'El texto ingresado no es válido.';
+    if (control.errors['maxlength']) return 'El texto no puede exceder los 255 caracteres.';
     return '';
   }
 }
