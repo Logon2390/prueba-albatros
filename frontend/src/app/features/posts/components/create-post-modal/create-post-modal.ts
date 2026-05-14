@@ -6,7 +6,8 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { noWhitespace } from '@app/shared/validators/no-whitespace.validator';
 import { Modal } from '@app/shared/components/modal/modal';
 import { AppInput } from '@app/shared/components/input/input';
 import { AppTextArea } from '@app/shared/components/text-area/text-area';
@@ -43,10 +44,12 @@ export class CreatePostModal {
   );
   readonly submitLabel = computed(() => (this.mode() === 'edit' ? 'Guardar' : 'Crear'));
 
+  readonly noWhitespace: ValidatorFn = noWhitespace;
+
   readonly form = inject(FormBuilder).group({
-    title: ['', [Validators.required, Validators.minLength(3)]],
-    author: ['', [Validators.required]],
-    body: ['', [Validators.required, Validators.minLength(10)]],
+    title: ['', [Validators.required, noWhitespace, Validators.minLength(3)]],
+    author: ['', [Validators.required, noWhitespace]],
+    body: ['', [Validators.required, noWhitespace, Validators.minLength(10)]],
   });
 
   open(mode: 'create' | 'edit' = 'create', post?: Post): void {
@@ -104,24 +107,27 @@ export class CreatePostModal {
 
   titleError(): string {
     const control = this.form.controls.title;
-    if (!control.touched || !control.errors) return '';
+    if (!(control.touched || control.dirty) || !control.errors) return '';
     if (control.errors['required']) return 'El titulo es requerido.';
     if (control.errors['minlength']) return 'El titulo debe tener al menos 3 caracteres.';
+    if (control.errors['whitespace']) return 'El titulo ingresado no es válido.';
     return '';
   }
 
   authorError(): string {
     const control = this.form.controls.author;
-    if (!control.touched || !control.errors) return '';
+    if (!(control.touched || control.dirty) || !control.errors) return '';
     if (control.errors['required']) return 'El autor es requerido.';
+    if (control.errors['whitespace']) return 'El autor ingresado no es válido.';
     return '';
   }
 
   bodyError(): string {
     const control = this.form.controls.body;
-    if (!control.touched || !control.errors) return '';
+    if (!(control.touched || control.dirty) || !control.errors) return '';
     if (control.errors['required']) return 'El texto es requerido.';
     if (control.errors['minlength']) return 'El texto debe tener al menos 10 caracteres.';
+    if (control.errors['whitespace']) return 'El texto ingresado no es válido.';
     return '';
   }
 }

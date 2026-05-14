@@ -9,7 +9,7 @@
       id="post-title"
       label="Titulo"
       placeholder="Escribe el titulo"
-      [error]="form.controls.title.touched && form.controls.title.invalid"
+      [error]="(form.controls.title.touched || form.controls.title.dirty) && form.controls.title.invalid"
       [errorText]="titleError()"
       formControlName="title"
     />
@@ -17,7 +17,7 @@
       id="post-author"
       label="Autor"
       placeholder="Nombre del autor"
-      [error]="form.controls.author.touched && form.controls.author.invalid"
+      [error]="(form.controls.author.touched || form.controls.author.dirty) && form.controls.author.invalid"
       [errorText]="authorError()"
       formControlName="author"
     />
@@ -25,7 +25,7 @@
       id="post-body"
       label="Texto"
       placeholder="Escribe el contenido del post"
-      [error]="form.controls.body.touched && form.controls.body.invalid"
+      [error]="(form.controls.body.touched || form.controls.body.dirty) && form.controls.body.invalid"
       [errorText]="bodyError()"
       [rows]="5"
       formControlName="body"
