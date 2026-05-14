@@ -50,16 +50,21 @@ export class CreatePostModal {
   });
 
   open(mode: 'create' | 'edit' = 'create', post?: Post): void {
+    const storedAuthor = localStorage.getItem('name')?.trim() ?? '';
     this.mode.set(mode);
     this.editingPostId.set(post?.id ?? null);
     if (mode === 'edit' && post) {
       this.form.reset({
         title: post.title ?? '',
-        author: post.author ?? '',
+        author: storedAuthor || (post.author ?? ''),
         body: post.body ?? '',
       });
     } else {
-      this.form.reset();
+      this.form.reset({
+        title: '',
+        author: storedAuthor,
+        body: '',
+      });
     }
     this.isOpen.set(true);
   }

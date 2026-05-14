@@ -190,11 +190,16 @@ export class Details {
     const body = this.commentText().trim();
     if (!body) return;
 
+    const storedName = localStorage.getItem('name');
+    const storedEmail = localStorage.getItem('email');
+    const name = storedName?.trim() || 'Anonymous';
+    const email = storedEmail?.trim() || 'test@gmail.com';
+
     this.commentService
       .create({
         postId,
-        name: 'Anonymous',
-        email: 'test@gmail.com',
+        name,
+        email,
         body,
       })
       .subscribe({
