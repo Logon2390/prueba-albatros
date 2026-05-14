@@ -25,14 +25,17 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { PostService } from '@app/features/posts/services/post.service';
 import { Post } from '@features/posts/model/post.model';
 import { PaginatedResponse } from '@app/shared/model/api-response.model';
+import { CreatePost } from '@features/posts/components/create-post-modal/create-post-modal';
 
 //componentes
+import { Button } from '@app/shared/components/button/button';
 import { AppInput } from '@app/shared/components/input/input';
 import { EmptyState } from '@app/shared/components/empty-state/empty-state';
 import { Loader } from '@app/shared/components/loader/loader';
 import { PostItem } from '@app/features/posts/components/post/post';
 import { Pagination } from '@shared/components/pagination/pagination';
 import { DeletePostModal } from '@app/features/posts/components/delete-post-modal/delete-post-modal';
+import { CreatePostModal } from '@features/posts/components/create-post-modal/create-post-modal';
 
 const EMPTY_RESPONSE: PaginatedResponse<Post> = {
   data: [],
@@ -54,9 +57,11 @@ const EMPTY_RESPONSE: PaginatedResponse<Post> = {
     PostItem,
     Pagination,
     AppInput,
+    Button,
     EmptyState,
     Loader,
     DeletePostModal,
+    CreatePostModal,
   ],
   templateUrl: './posts.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -127,8 +132,8 @@ export class PostsPage implements OnDestroy {
     this.router.navigate(['/post', id]);
   }
 
-  onEditPost(id: string): void {
-    this.router.navigate(['/posts', id, 'edit']);
+  onEditPost(post: Post, modal: CreatePostModal): void {
+    modal.open('edit', post);
   }
 
   onDeletePost(id: string, modal: DeletePostModal): void {
@@ -154,6 +159,31 @@ export class PostsPage implements OnDestroy {
 
   onCloseDeleteModal(): void {
     this.selectedPostId.set(null);
+  }
+
+  onOpenCreateModal(modal: CreatePostModal): void {
+    modal.open('create');
+  }
+
+  onSubmitCreatePost(payload: CreatePost): void {
+    const { close, mode, postId, ...formPayload } = payload;
+    const request$ = mode === 'edit' && postId
+      ? this.postService.update(postId, formPayload)
+      : this.postService.create(formPayload);
+
+    request$.subscribe({
+      next: () => {
+        this.onReload();
+        close();
+      },
+      error: () => {
+        alert(
+          mode === 'edit'
+            ? 'No se pudo actualizar el post. Por favor, intenta de nuevo.'
+            : 'No se pudo crear el post. Por favor, intenta de nuevo.',
+        );
+      },
+    });
   }
 
   onReload(): void {

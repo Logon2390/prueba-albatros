@@ -15,6 +15,13 @@
           />
         </div>
       }
+      <app-button
+        variant="primary"
+        size="md"
+        text="Nuevo Post"
+        icon="icon-[lucide--plus]"
+        (onClick)="onOpenCreateModal(createModal)"
+      />
     </div>
   </div>
 
@@ -38,6 +45,7 @@
         description="Crea tu primer post para comenzar."
         actionText="Crear post"
         class="flex items-center justify-center"
+        (action)="onOpenCreateModal(createModal)"
       />
     } @else {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -45,7 +53,7 @@
           <app-post
             [post]="post"
             (view)="onViewPost($event)"
-            (edit)="onEditPost($event)"
+            (edit)="onEditPost(post, createModal)"
             (delete)="onDeletePost($event, deleteModal)"
           />
         }
@@ -67,4 +75,5 @@
       </div>
     }
   </div>
+  <app-create-post-modal #createModal (submitPost)="onSubmitCreatePost($event)" />
 </div>
