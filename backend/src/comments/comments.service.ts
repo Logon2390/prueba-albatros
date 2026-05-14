@@ -4,16 +4,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Comment, CommentDocument } from './schemas/comment.schema';
 import { Model } from 'mongoose';
 import { plainToInstance } from 'class-transformer';
-import { ApiResponse } from '../common/responses/api.response';
 import { ResponseCommentDto } from './dto/response-comment.dto';
 
 @Injectable()
 export class CommentsService {
   constructor(@InjectModel(Comment.name) private commentModel: Model<CommentDocument>) {}
 
-  create(createCommentDto: CreateCommentDto) : ResponseCommentDto {
+  async create(createCommentDto: CreateCommentDto) : Promise<ResponseCommentDto> {
     const comment = new this.commentModel(createCommentDto);
-    return this.toDTO(comment);
+    const saved = await comment.save();
+    return this.toDTO(saved);
   }
 
   async findByPostId(postId: string) : Promise<ResponseCommentDto[]> {
