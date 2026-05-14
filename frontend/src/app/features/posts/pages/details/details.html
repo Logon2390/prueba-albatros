@@ -1,0 +1,144 @@
+<section class="max-w-5xl mx-auto">
+  <div class="flex items-center justify-between text-sm text-on-surface-variant mb-6">
+    <app-button
+      variant="ghost"
+      size="sm"
+      text="Volver a posts"
+      icon="icon-[lucide--arrow-left]"
+      (click)="onBack()"
+    />
+  </div>
+
+  @if (isLoading()) {
+    <app-loader class="w-full" />
+  } @else if (errorMessage()) {
+    <div
+      class="flex flex-col items-center justify-center py-16 gap-3 bg-surface border border-surface-border rounded-xl"
+    >
+      <span class="icon-[lucide--triangle-alert] text-3xl text-on-surface-variant"></span>
+      <p class=" text-[14px] text-on-surface">{{ errorMessage() }}</p>
+    </div>
+  } @else if (!post()) {
+    <div
+      class="flex flex-col items-center justify-center py-16 gap-3 bg-surface border border-surface-border rounded-xl"
+    >
+      <span class="icon-[lucide--file-x] text-3xl text-on-surface-variant"></span>
+      <p class="text-[14px] text-on-surface">No se encontro el post solicitado.</p>
+      <app-button variant="outline" size="md" text="Volver" (onClick)="onBack()" />
+    </div>
+  } @else {
+    <div class="flex flex-col gap-10">
+      <div
+        class="flex flex-col gap-6 rounded-3xl border border-surface-border bg-surface p-8 shadow-sm"
+      >
+        <div class="flex items-start justify-between flex-wrap gap-4">
+          <h1 class="text-on-surface leading-tight">{{ post()?.title }}</h1>
+          <div class="flex items-center gap-3">
+            <app-button variant="outline" size="sm" text="Editar" (onClick)="onEdit(createModal)" />
+            <app-button
+              variant="ghost"
+              size="sm"
+              text="Eliminar"
+              (onClick)="onDeletePost(deleteModal)"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div>
+            <p class="font-title-sm text-on-surface">{{ post()?.author }}</p>
+            <p class="text-sm text-on-surface-variant">
+              {{ formatDate(post()?.createdAt ?? '') }}
+            </p>
+          </div>
+        </div>
+
+        <div class="text-on-surface-variant leading-relaxed space-y-4">
+          <p>{{ post()?.body }}</p>
+          <p>
+            El enfoque "flat-plus" evita la acumulacion de sombras pesadas y prioriza capas tonales
+            que ayudan a mantener la lectura clara en vistas extensas.
+          </p>
+          <p>
+            Un ritmo de espaciado consistente permite que los equipos naveguen grandes bloques de
+            contenido sin fatiga visual, manteniendo la productividad como objetivo principal.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-6">
+        <div class="flex items-center gap-3">
+          <h2 class="text-on-surface">Comentarios</h2>
+          <span class="text-sm text-on-surface-variant">{{ comments().length }}</span>
+        </div>
+
+        <app-text-area
+          className="md:col-span-2"
+          id="comment-text"
+          label="Comentario"
+          placeholder="Escribe tu comentario"
+          [value]="commentText()"
+          (valueChange)="commentText.set($event)"
+          [rows]="3"
+        />
+
+        <app-button
+          variant="primary"
+          size="md"
+          text="Publicar comentario"
+          [disabled]="!commentText().trim()"
+          (onClick)="onSubmitComment()"
+        />
+
+        <div class="flex flex-col gap-4 items-center justify-center">
+          @if (comments().length === 0) {
+            <app-empty-state
+              title="Aun no hay comentarios"
+              description="Se el primero en compartir tu opinion sobre este post."
+              icon="icon-[lucide--message-circle]"
+            />
+          } @else {
+            @for (comment of comments(); track comment.id) {
+              <app-comment
+                class="w-full"
+                [id]="comment.id"
+                [name]="comment.name"
+                [email]="comment.email"
+                [time]="comment.createdAt"
+                [body]="comment.body"
+                (delete)="onOpenDeleteComment($event)"
+              />
+            }
+          }
+        </div>
+      </div>
+    </div>
+  }
+  <app-delete-post-modal
+    #deleteModal
+    (confirm)="onConfirmDelete(deleteModal)"
+    (closed)="onCloseDeleteModal()"
+  />
+  <app-modal
+    [open]="deleteCommentModalOpen()"
+    title="Eliminar comentario"
+    description="Esta accion no se puede deshacer. Vas a eliminar este comentario de forma permanente."
+    (closed)="onCloseDeleteCommentModal()"
+  >
+    <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
+      <app-button
+        variant="outline"
+        size="md"
+        text="Cancelar"
+        (onClick)="onCloseDeleteCommentModal()"
+      />
+      <app-button
+        variant="primary"
+        size="md"
+        text="Eliminar"
+        (onClick)="onConfirmDeleteComment()"
+      />
+    </div>
+  </app-modal>
+  <app-create-post-modal #createModal (submitPost)="onSubmitEditPost($event)" />
+</section>
