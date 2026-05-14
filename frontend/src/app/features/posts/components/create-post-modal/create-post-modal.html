@@ -1,0 +1,44 @@
+<app-modal
+  [open]="isOpen()"
+  [title]="modalTitle()"
+  [description]="modalDescription()"
+  (closed)="onClose()"
+>
+  <form class="mt-6 flex flex-col gap-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-input
+      id="post-title"
+      label="Titulo"
+      placeholder="Escribe el titulo"
+      [error]="form.controls.title.touched && form.controls.title.invalid"
+      [errorText]="titleError()"
+      formControlName="title"
+    />
+    <app-input
+      id="post-author"
+      label="Autor"
+      placeholder="Nombre del autor"
+      [error]="form.controls.author.touched && form.controls.author.invalid"
+      [errorText]="authorError()"
+      formControlName="author"
+    />
+    <app-text-area
+      id="post-body"
+      label="Texto"
+      placeholder="Escribe el contenido del post"
+      [error]="form.controls.body.touched && form.controls.body.invalid"
+      [errorText]="bodyError()"
+      [rows]="5"
+      formControlName="body"
+    />
+    <div class="mt-2 flex flex-col sm:flex-row gap-3 justify-end">
+      <app-button variant="outline" size="md" text="Cancelar" (onClick)="onClose()" />
+      <app-button
+        variant="primary"
+        size="md"
+        [text]="submitLabel()"
+        type="submit"
+        [disabled]="form.invalid"
+      />
+    </div>
+  </form>
+</app-modal>
