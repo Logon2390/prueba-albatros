@@ -57,6 +57,13 @@ export class Details {
 
   private readonly postState = signal<Post | null>(null);
   readonly post = computed(() => this.postState());
+  readonly isModified = computed(() => {
+    const post = this.post();
+    if (!post) return false;
+    const createdAt = new Date(post.createdAt).getTime();
+    const updatedAt = new Date(post.updatedAt).getTime();
+    return updatedAt - createdAt > 1000;
+  });
   readonly formatDate = formatDate;
 
   constructor() {

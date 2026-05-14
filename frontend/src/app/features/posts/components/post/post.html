@@ -4,7 +4,7 @@
     class="bg-surface border border-surface-border rounded-xl hover:border-surface-strong hover:shadow-md transition-all duration-300 group flex flex-col min-h-65 p-4 hover:cursor-pointer"
   >
     <div class="flex items-center gap-3 mb-4">
-      <app-user [name]="post.author || 'Anonymous'" />
+      <app-user />
       <div class="flex-1">
         <p class="font-label-md text-[13px] text-on-surface font-medium leading-none">
           {{ post.author || 'Anonymous' }}

@@ -16,7 +16,7 @@
       class="flex flex-col items-center justify-center py-16 gap-3 bg-surface border border-surface-border rounded-xl"
     >
       <span class="icon-[lucide--triangle-alert] text-3xl text-on-surface-variant"></span>
-      <p class=" text-[14px] text-on-surface">{{ errorMessage() }}</p>
+      <p class="text-[14px] text-on-surface">{{ errorMessage() }}</p>
     </div>
   } @else if (!post()) {
     <div
@@ -47,9 +47,14 @@
         <div class="flex items-center gap-4">
           <div>
             <p class="font-title-sm text-on-surface">{{ post()?.author }}</p>
-            <p class="text-sm text-on-surface-variant">
-              {{ formatDate(post()?.createdAt ?? '') }}
-            </p>
+            <span class="flex items-center justify-between">
+              <p class="text-sm text-on-surface-variant">
+                {{ formatDate(post()?.createdAt ?? '') }}
+              </p>
+              <span *ngIf="isModified()" class="ml-2 text-sm text-on-surface-variant italic"
+                >Editado {{ formatDate(post()?.updatedAt ?? '') }}</span
+              >
+            </span>
           </div>
         </div>
 
@@ -83,7 +88,9 @@
         />
 
         <div class="flex flex-col gap-4 items-center justify-center">
-          @if (comments().length === 0) {
+          @if (isCommentsLoading()) {
+            <app-loader class="w-full" />
+          } @else if (comments().length === 0) {
             <app-empty-state
               title="Aun no hay comentarios"
               description="Se el primero en compartir tu opinion sobre este post."
@@ -94,7 +101,7 @@
               <app-comment
                 class="w-full"
                 [id]="comment.id"
-                [name]="comment.name"
+                [userName]="comment.name"
                 [email]="comment.email"
                 [time]="comment.createdAt"
                 [body]="comment.body"

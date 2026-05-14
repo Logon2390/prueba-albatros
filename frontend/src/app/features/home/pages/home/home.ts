@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AuthService } from '@features/home/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Button } from '@app/shared/components/button/button';
 import { AppInput } from '@app/shared/components/input/input';
 import { AutoFocusDirective } from '@app/shared/directives/autofocus';
@@ -17,6 +17,8 @@ import { AutoFocusDirective } from '@app/shared/directives/autofocus';
 export class HomePage {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
+
+  readonly isLoading = signal(false);
 
   readonly form = new FormGroup({
     name: new FormControl('', {
@@ -33,7 +35,7 @@ export class HomePage {
     initialValue: this.form.status,
   });
 
-  readonly isFormValid = computed(() => this.status() === 'VALID');
+  readonly isFormValid = computed(() => this.status() === 'VALID' && !this.isLoading());
 
   getError(field: 'name' | 'email'): string {
     const control = this.form.controls[field];
@@ -46,10 +48,14 @@ export class HomePage {
 
   submit(): void {
     this.form.markAllAsTouched();
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.isLoading()) return;
 
     const { name, email } = this.form.getRawValue();
-    this.authService.login(name.trim(), email.trim());
-    this.router.navigate(['/posts']);
+
+    this.isLoading.set(true);
+    this.authService.login({ name: name.trim(), email: email.trim() }).subscribe({
+      next: () => this.router.navigate(['/posts']),
+      error: () => this.isLoading.set(false),
+    });
   }
 }
