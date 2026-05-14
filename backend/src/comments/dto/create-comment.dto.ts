@@ -3,10 +3,6 @@ import { Expose } from "class-transformer";
 
 export class CreateCommentDto {
     @Expose()
-    @IsOptional()
-    id: string | undefined;
-
-    @Expose()
     @IsString()
     postId!: string;
 
