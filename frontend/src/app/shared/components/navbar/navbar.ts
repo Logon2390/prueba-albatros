@@ -1,25 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '@app/features/home/services/auth.service';
+import { User } from '../user/user';
 import { Button } from '../button/button';
-
-export interface NavItem {
-  label: string;
-  route?: string;
-  active?: boolean;
-}
 
 @Component({
   selector: 'app-navbar',
-  imports: [Button, CommonModule, FormsModule],
+  imports: [CommonModule, User, Button],
   templateUrl: './navbar.html',
 })
 export class Navbar {
-  @Input() title: string = 'Post';
-  @Input() buttonText: string = 'Nuevo Post';
-  @Input() buttonIcon: string = 'icon-[lucide--plus]';
+  @Input() title = 'Post App';
 
-  onCreateClick(): void {
-    console.log('Create clicked');
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+
+  readonly userName = this.authService.userName;
+  readonly isLoggedIn = this.authService.isLoggedIn;
+
+  onLogout(): void {
+    this.authService.logout(this.router);
   }
 }

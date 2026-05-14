@@ -1,12 +1,20 @@
-<header class="fixed top-0 w-full z-40 bg-surface-container-lowest border-b border-surface-border flex justify-end items-center h-16 px-6">
+<header class="fixed top-0 w-full z-40 bg-surface-container-lowest border-b border-surface-border flex justify-between items-center h-16 px-6">
   <div class="flex items-center gap-4">
-    @if (buttonText) {
-      <app-button
-        [variant]="'primary'"
-        [text]="buttonText"
-        [icon]="buttonIcon"
-        (onClick)="onCreateClick()"
-      />
+    @if (title) {
+      <div class="flex flex-col">
+        <h1 class="text-on-background font-bold">{{ title }}</h1>
+      </div>
     }
+  </div>
+  <div class="flex items-center gap-3">
+    <app-user [name]="userName()" />
+    <span class="text-sm text-on-surface-variant">{{ userName() }}</span>
+    <app-button
+      variant="ghost"
+      size="sm"
+      icon="icon-[lucide--log-out]"
+      text="Salir"
+      (onClick)="onLogout()"
+    />
   </div>
 </header>
