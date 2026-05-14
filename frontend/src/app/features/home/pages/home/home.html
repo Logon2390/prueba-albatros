@@ -1,0 +1,45 @@
+<section class="min-h-[calc(100vh-6rem)] flex items-center justify-center px-4">
+  <div class="home-card w-full max-w-xl rounded-3xl border border-surface-border bg-surface p-8 shadow-sm">
+    <div class="flex flex-col gap-2 mb-8">
+      <p class="text-sm text-on-surface-variant">Bienvenido a Post App</p>
+      <h1 class="text-on-surface">Inicia con tu perfil</h1>
+      <p class="text-on-surface-variant">
+        Completa tu perfil para empezar a publicar posts
+      </p>
+    </div>
+
+    <form class="flex flex-col gap-5" (submit)="submit(); $event.preventDefault()">
+      <app-input
+        id="home-name"
+        label="Nombre"
+        placeholder="Tu nombre"
+        [value]="name()"
+        [error]="!!nameError()"
+        [errorText]="nameError()" 
+        (valueChange)="onNameChange($event)"
+        (blur)="onNameBlur()"
+      />
+
+      <app-input
+        id="home-email"
+        label="Email"
+        type="email"
+        placeholder="correo@ejemplo.com"
+        [value]="email()"
+        [error]="!!emailError()"
+        [errorText]="emailError()"
+        (valueChange)="onEmailChange($event)"
+        (blur)="onEmailBlur()"
+      />
+
+      <app-button
+        variant="primary"
+        size="lg"
+        text="Iniciar"
+        type="submit"
+        [disabled]="!name().trim() || !email().trim()"
+        [fullWidth]="true"
+      />
+    </form>
+  </div>
+</section>
