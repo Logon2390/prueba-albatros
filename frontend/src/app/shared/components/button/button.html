@@ -1,6 +1,7 @@
 <button
   (click)="handleClick()"
   [disabled]="disabled"
+  [attr.type]="type"
   [class]="[
     'rounded-lg flex items-center justify-center gap-2 font-label-md transition-colors',
     variant === 'primary' ? 'bg-primary text-on-primary hover:bg-primary-hover' : '',

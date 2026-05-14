@@ -17,6 +17,7 @@ export class Button {
   @Input() icon: string = '';
   @Input() iconColor: string = '';
   @Input() disabled: boolean = false;
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() fullWidth: boolean = false;
   @Input() isActive: boolean = false;
   @Output() onClick = new EventEmitter<void>();
