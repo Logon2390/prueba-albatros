@@ -13,7 +13,14 @@
           "name": "Actualizar Post",
           "request": {
             "auth": {
-              "type": "noauth"
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
             },
             "method": "PUT",
             "header": [],
@@ -27,7 +34,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/posts/6a026ec48106bf7a33ea9914",
+              "raw": "http://localhost:3000/posts/6a066d9b48e2d86c15bb5883",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -35,7 +42,7 @@
               "port": "3000",
               "path": [
                 "posts",
-                "6a026ec48106bf7a33ea9914"
+                "6a066d9b48e2d86c15bb5883"
               ]
             }
           },
@@ -48,7 +55,14 @@
           },
           "request": {
             "auth": {
-              "type": "noauth"
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
             },
             "method": "GET",
             "header": [],
@@ -62,7 +76,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/posts",
+              "raw": "http://localhost:3000/posts?page=1&limit=10",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -70,6 +84,16 @@
               "port": "3000",
               "path": [
                 "posts"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
               ]
             }
           },
@@ -79,7 +103,14 @@
           "name": "Crear Post",
           "request": {
             "auth": {
-              "type": "noauth"
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
             },
             "method": "POST",
             "header": [],
@@ -110,7 +141,14 @@
           "name": "Eliminar Post",
           "request": {
             "auth": {
-              "type": "noauth"
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
             },
             "method": "DELETE",
             "header": [],
@@ -119,7 +157,7 @@
               "raw": ""
             },
             "url": {
-              "raw": "http://localhost:3000/posts/6a02673fd7a68e3767499f15",
+              "raw": "http://localhost:3000/posts/6a066d9b48e2d86c15bb5883",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -127,7 +165,7 @@
               "port": "3000",
               "path": [
                 "posts",
-                "6a02673fd7a68e3767499f15"
+                "6a066d9b48e2d86c15bb5883"
               ]
             }
           },
@@ -137,13 +175,20 @@
           "name": "Crear multiples Posts",
           "request": {
             "auth": {
-              "type": "noauth"
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
             },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "[\r\n    {\r\n        \"title\": \"Post 1\",\r\n        \"body\": \"Contenido...\",\r\n        \"author\": \"User 1\"\r\n    },\r\n    {\r\n        \"title\": \"Post 2\",\r\n        \"body\": \"Contenido...\",\r\n        \"author\": \"User 2\"\r\n    }\r\n]",
+              "raw": "[\r\n    {\r\n        \"title\": \"Introducción a Angular\",\r\n        \"body\": \"Angular es un framework de desarrollo web mantenido por Google que permite crear aplicaciones SPA robustas.\",\r\n        \"author\": \"Carlos Méndez\"\r\n    },\r\n    {\r\n        \"title\": \"NestJS desde cero\",\r\n        \"body\": \"NestJS es un framework de Node.js que utiliza TypeScript y sigue una arquitectura modular inspirada en Angular.\",\r\n        \"author\": \"María González\"\r\n    },\r\n    {\r\n        \"title\": \"MongoDB para principiantes\",\r\n        \"body\": \"MongoDB es una base de datos NoSQL orientada a documentos que almacena la información en formato BSON.\",\r\n        \"author\": \"Pedro Ramírez\"\r\n    },\r\n    {\r\n        \"title\": \"Signals en Angular 18\",\r\n        \"body\": \"Los signals son una nueva primitiva reactiva en Angular que permite gestionar el estado de forma más eficiente y predecible.\",\r\n        \"author\": \"Ana Jiménez\"\r\n    },\r\n    {\r\n        \"title\": \"RxJS operadores esenciales\",\r\n        \"body\": \"RxJS es una librería de programación reactiva que incluye operadores como switchMap, catchError, tap y combineLatest.\",\r\n        \"author\": \"Luis Herrera\"\r\n    },\r\n    {\r\n        \"title\": \"Docker para desarrolladores\",\r\n        \"body\": \"Docker permite empaquetar aplicaciones en contenedores para garantizar que funcionen igual en cualquier entorno de ejecución.\",\r\n        \"author\": \"Sofía Castro\"\r\n    },\r\n    {\r\n        \"title\": \"Clean Code en TypeScript\",\r\n        \"body\": \"Escribir código limpio en TypeScript implica usar nombres descriptivos, funciones pequeñas y una correcta separación de responsabilidades.\",\r\n        \"author\": \"Jorge Vargas\"\r\n    },\r\n    {\r\n        \"title\": \"Formularios reactivos en Angular\",\r\n        \"body\": \"Los formularios reactivos de Angular ofrecen un enfoque basado en código para manejar validaciones y estados del formulario de forma robusta.\",\r\n        \"author\": \"Daniela Torres\"\r\n    },\r\n    {\r\n        \"title\": \"JWT y autenticación en NestJS\",\r\n        \"body\": \"JSON Web Tokens permiten implementar autenticación stateless en APIs REST de forma segura y escalable con NestJS.\",\r\n        \"author\": \"Andrés Mora\"\r\n    },\r\n    {\r\n        \"title\": \"Mongoose schemas avanzados\",\r\n        \"body\": \"Mongoose permite definir schemas con validaciones, hooks y métodos personalizados para modelar los datos en MongoDB de forma eficiente.\",\r\n        \"author\": \"Valentina Ríos\"\r\n    },\r\n    {\r\n        \"title\": \"Arquitectura modular con NestJS\",\r\n        \"body\": \"NestJS promueve una arquitectura modular donde cada funcionalidad se encapsula en módulos independientes con sus controladores y servicios.\",\r\n        \"author\": \"Ricardo Solano\"\r\n    },\r\n    {\r\n        \"title\": \"Manejo de errores en Angular\",\r\n        \"body\": \"Angular permite interceptar errores HTTP globalmente usando HttpInterceptor para centralizar el manejo y mostrar mensajes amigables al usuario.\",\r\n        \"author\": \"Camila Navarro\"\r\n    },\r\n    {\r\n        \"title\": \"Tailwind CSS en proyectos modernos\",\r\n        \"body\": \"Tailwind CSS es un framework de utilidades que permite construir interfaces responsivas y personalizadas directamente desde el HTML sin salir del markup.\",\r\n        \"author\": \"Sebastián Flores\"\r\n    },\r\n    {\r\n        \"title\": \"Testing unitario con Jest\",\r\n        \"body\": \"Jest es el framework de testing más popular en el ecosistema JavaScript y NestJS lo incluye por defecto para escribir pruebas unitarias y de integración.\",\r\n        \"author\": \"Isabella Ruiz\"\r\n    },\r\n    {\r\n        \"title\": \"Buenas prácticas en APIs REST\",\r\n        \"body\": \"Una API REST bien diseñada usa correctamente los verbos HTTP, retorna códigos de estado apropiados y mantiene respuestas estandarizadas y consistentes.\",\r\n        \"author\": \"Felipe Mendoza\"\r\n    }\r\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -164,6 +209,36 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Obtener Post",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/posts/6a066de448e2d86c15bb5890",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "posts",
+                "6a066de448e2d86c15bb5890"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -174,13 +249,20 @@
           "name": "Crear Comentario",
           "request": {
             "auth": {
-              "type": "noauth"
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
             },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"postId\": \"6a026ec48106bf7a33ea9914\",\r\n  \"name\": \"Juan Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"body\": \"Este es un comentario de prueba para el post.\"\r\n}",
+              "raw": "{\r\n  \"postId\": \"6a0652ae5f0a16cbae123859\",\r\n  \"name\": \"Juan Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"body\": \"Este es un comentario de prueba para el post.\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -234,12 +316,19 @@
           "name": "Eliminar Comentario",
           "request": {
             "auth": {
-              "type": "noauth"
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3ODgwNjEzNSwiZXhwIjoxNzc4ODA2NzM1fQ.TwcUBL9lYlGzSYir04U_QUA7CKfg7o2jxbY4nBTrndA",
+                  "type": "string"
+                }
+              ]
             },
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/comments/6a027f2ed4fe926c2b34f605",
+              "raw": "http://localhost:3000/comments/6a066d6348e2d86c15bb5881",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -247,7 +336,44 @@
               "port": "3000",
               "path": [
                 "comments",
-                "6a027f2ed4fe926c2b34f605"
+                "6a066d6348e2d86c15bb5881"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Test\",\r\n    \"email\": \"test@example.com\"\r\n}   ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
               ]
             }
           },
