@@ -14,7 +14,7 @@ describe('Comment', () => {
     fixture = TestBed.createComponent(Comment);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('id', 'c1');
-    fixture.componentRef.setInput('name', 'Test User');
+    fixture.componentRef.setInput('userName', 'Test User');
     fixture.componentRef.setInput('email', 'test@example.com');
     fixture.componentRef.setInput('time', 'Ahora');
     fixture.componentRef.setInput('body', 'Comentario de prueba');
